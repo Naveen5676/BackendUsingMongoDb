@@ -19,6 +19,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
+    userId: req.user
   });
   product
     .save()
@@ -77,6 +78,12 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  //select is used to controll which fields to return like in this only title and price are returned and
+  // -_id  they - referes do not include that i.e _id 
+  // .select('title price -_id')
+ // they populate is used to pupulate all the related data  of that user not only their user id but hteir entire details 
+ // the second argument in populate referes to the data whic are to be included only  
+  // .populate('userId' , 'name')
     .then((products) => {
       res.render("admin/products", {
         prods: products,
